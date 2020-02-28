@@ -1,0 +1,74 @@
+import { UICorePlugin, Events, Styler, template } from 'clappr'
+
+import pluginStyle from './public/skeleton.scss'
+import templateHtml from './public/skeleton.html'
+
+export default class SkeletonPlugin extends UICorePlugin {
+  get name() { return 'skeleton' }
+
+  get attributes() { return { class: 'skeleton' } }
+
+  get template() { return template(templateHtml) }
+
+  get events() {
+    const events = { click: 'onClick' }
+    return events
+  }
+
+  constructor(core) {
+    super(core)
+    this.init()
+  }
+
+  init() {
+    this.bindEvents()
+  }
+
+  bindEvents() {
+    const coreEventListenerData = [
+      { object: this.core, event: Events.CORE_ACTIVE_CONTAINER_CHANGED, callback: this.onContainerChanged },
+      { object: this.core, event: Events.CORE_RESIZE, callback: this.registerPlayerResize },
+    ]
+
+    coreEventListenerData.forEach(item => this.stopListening(item.object, item.event, item.callback))
+    coreEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
+  }
+
+  bindContainerEvents() {
+    const containerEventListenerData = [{ object: this.container, event: Events.CONTAINER_CLICK, callback: this.hide }]
+
+    if (this.container) {
+      containerEventListenerData.forEach(item => this.stopListening(item.object, item.event, item.callback))
+      containerEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
+    }
+  }
+
+  registerPlayerResize(size) {
+    if (!size.width || typeof size.width !== 'number') return
+    this.playerSize = size
+  }
+
+  onContainerChanged() {
+    this.container = this.core.activeContainer
+    this.bindContainerEvents()
+  }
+
+  onClick() {
+    console.log('Skeleton plugin clicked!') // eslint-disable-line no-console
+  }
+
+  show() {
+    this.$el.show()
+  }
+
+  hide() {
+    this.$el.hide()
+  }
+
+  render() {
+    this.$el.html(this.template({ options: this.options }))
+    this.$el.append(Styler.getStyleFor(pluginStyle))
+    this.core.$el[0].append(this.$el[0])
+    return this
+  }
+}

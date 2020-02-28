@@ -1,0 +1,61 @@
+{
+  "name": "clappr-skeleton-plugin",
+  "version": "0.0.5",
+  "description": "A skeleton plugin for Clappr to speed up the creation of new plugins",
+  "keywords": [
+    "clappr",
+    "plugin",
+    "skeleton"
+  ],
+  "homepage": "https://github.com/joaopaulovieira/clappr-skeleton-plugin",
+  "bugs": {
+    "url": "https://github.com/joaopaulovieira/clappr-skeleton-plugin/issues",
+    "email": "vieira.joaopaulo.91@gmail.com"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Joao Paulo Vieira <vieira.joaopaulo.91@gmail.com>",
+  "files": [
+    "/dist",
+    "/src"
+  ],
+  "main": "dist/clappr-skeleton-plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:joaopaulovieira/clappr-skeleton-plugin.git"
+  },
+  "scripts": {
+    "bundle-check": "ANALYZE_BUNDLE=true webpack -p",
+    "build": "webpack --progress --display-modules",
+    "release": "MINIMIZE=true webpack -p",
+    "start": "webpack-dev-server",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "karmatic",
+    "test:debug": "karmatic debug",
+    "test:coverage": "open coverage/*/index.html"
+  },
+  "devDependencies": {
+    "@babel/core": "7.8.4",
+    "@babel/preset-env": "7.8.6",
+    "babel-loader": "8.0.6",
+    "babel-plugin-add-module-exports": "1.0.2",
+    "clappr": "0.3.12",
+    "css-loader": "3.4.2",
+    "eslint": "6.8.0",
+    "eslint-plugin-jasmine": "4.1.0",
+    "html-loader": "0.5.5",
+    "karmatic": "1.4.0",
+    "node-sass": "4.13.1",
+    "sass-loader": "8.0.2",
+    "webpack": "4.41.6",
+    "webpack-bundle-analyzer": "3.6.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.10.3"
+  },
+  "peerDependencies": {
+    "clappr": "0.3.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
