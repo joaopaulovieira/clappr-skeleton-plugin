@@ -19,24 +19,32 @@
     "/src"
   ],
   "main": "dist/clappr-skeleton-plugin.js",
+  "module": "dist/clappr-skeleton-plugin.esm.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:joaopaulovieira/clappr-skeleton-plugin.git"
   },
   "scripts": {
     "bundle-check": "ANALYZE_BUNDLE=true webpack -p",
+    "bundle-check:rollup": "ANALYZE_BUNDLE=true rollup --config",
     "build": "webpack --progress --display-modules",
+    "build:rollup": "rollup --config",
     "release": "MINIMIZE=true webpack -p",
     "start": "webpack-dev-server",
+    "start:rollup": "DEV=true rollup --config --watch",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "test": "karmatic",
+    "test:jest": "jest",
     "test:debug": "karmatic debug",
     "test:coverage": "open coverage/*/index.html"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",
     "@babel/preset-env": "7.8.6",
+    "@rollup/plugin-commonjs": "11.0.2",
+    "@rollup/plugin-node-resolve": "7.1.1",
+    "babel-jest": "25.1.0",
     "babel-loader": "8.0.6",
     "babel-plugin-add-module-exports": "1.0.2",
     "clappr": "0.3.12",
@@ -44,8 +52,19 @@
     "eslint": "6.8.0",
     "eslint-plugin-jasmine": "4.1.0",
     "html-loader": "0.5.5",
+    "jest": "25.1.0",
     "karmatic": "1.4.0",
     "node-sass": "4.13.1",
+    "rollup": "^1.32.0",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-filesize": "6.2.1",
+    "rollup-plugin-html": "0.2.1",
+    "rollup-plugin-livereload": "1.0.4",
+    "rollup-plugin-postcss": "2.1.1",
+    "rollup-plugin-serve": "1.0.1",
+    "rollup-plugin-sizes": "1.0.1",
+    "rollup-plugin-terser": "5.2.0",
+    "rollup-plugin-visualizer": "3.3.1",
     "sass-loader": "8.0.2",
     "webpack": "4.41.6",
     "webpack-bundle-analyzer": "3.6.0",
@@ -57,5 +76,15 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.html$": "<rootDir>/src/__mocks__/htmlMock.js"
+    },
+    "moduleNameMapper": {
+      "\\.(scss)$": "<rootDir>/src/__mocks__/styleMock.js"
+    }
   }
 }

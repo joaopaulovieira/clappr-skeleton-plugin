@@ -1,0 +1,11 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "modules": false }]
+  ],
+  "plugins": [["add-module-exports", { "addDefaultProperty": true }]],
+  "env": {
+    "test": {
+      "presets": [["@babel/preset-env"]]
+    }
+  }
+}
