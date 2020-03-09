@@ -1,6 +1,6 @@
 {
   "name": "clappr-skeleton-plugin",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "A skeleton plugin for Clappr to speed up the creation of new plugins",
   "keywords": [
     "clappr",
