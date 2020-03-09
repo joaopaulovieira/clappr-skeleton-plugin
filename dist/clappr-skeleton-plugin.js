@@ -1,10 +1,8 @@
-
-(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.head.appendChild(r) })(window.document);
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('clappr')) :
-  typeof define === 'function' && define.amd ? define(['clappr'], factory) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@clappr/core')) :
+  typeof define === 'function' && define.amd ? define(['@clappr/core'], factory) :
   (global = global || self, global.SkeletonPlugin = factory(global.Clappr));
-}(this, (function (clappr) { 'use strict';
+}(this, (function (core) { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -75,6 +73,36 @@
     return _assertThisInitialized(self);
   }
 
+  function _superPropBase(object, property) {
+    while (!Object.prototype.hasOwnProperty.call(object, property)) {
+      object = _getPrototypeOf(object);
+      if (object === null) break;
+    }
+
+    return object;
+  }
+
+  function _get(target, property, receiver) {
+    if (typeof Reflect !== "undefined" && Reflect.get) {
+      _get = Reflect.get;
+    } else {
+      _get = function _get(target, property, receiver) {
+        var base = _superPropBase(target, property);
+
+        if (!base) return;
+        var desc = Object.getOwnPropertyDescriptor(base, property);
+
+        if (desc.get) {
+          return desc.get.call(receiver);
+        }
+
+        return desc.value;
+      };
+    }
+
+    return _get(target, property, receiver || target);
+  }
+
   function styleInject(css, ref) {
     if ( ref === void 0 ) ref = {};
     var insertAt = ref.insertAt;
@@ -102,8 +130,8 @@
     }
   }
 
-  var css = ".skeleton-container {\n  position: absolute;\n  height: 5%;\n  width: 20%;\n  z-index: 999;\n  background-color: black;\n  color: white;\n  line-height: 1.15 !important; }\n";
-  styleInject(css);
+  var css_248z = ".skeleton-container {\n  position: absolute;\n  height: 5%;\n  width: 20%;\n  z-index: 999;\n  background-color: black;\n  color: white;\n  line-height: 1.15 !important; }\n";
+  styleInject(css_248z);
 
   var templateHtml = "<p class=\"skeleton-container\"> Skeleton Plugin</p>\n";
 
@@ -116,6 +144,13 @@
         return 'skeleton';
       }
     }, {
+      key: "supportedVersion",
+      get: function get() {
+        return {
+          min: core.version
+        };
+      }
+    }, {
       key: "attributes",
       get: function get() {
         return {
@@ -125,7 +160,7 @@
     }, {
       key: "template",
       get: function get() {
-        return clappr.template(templateHtml);
+        return core.template(templateHtml);
       }
     }, {
       key: "events",
@@ -161,11 +196,11 @@
 
         var coreEventListenerData = [{
           object: this.core,
-          event: clappr.Events.CORE_ACTIVE_CONTAINER_CHANGED,
+          event: core.Events.CORE_ACTIVE_CONTAINER_CHANGED,
           callback: this.onContainerChanged
         }, {
           object: this.core,
-          event: clappr.Events.CORE_RESIZE,
+          event: core.Events.CORE_RESIZE,
           callback: this.registerPlayerResize
         }];
         coreEventListenerData.forEach(function (item) {
@@ -182,18 +217,12 @@
 
         var containerEventListenerData = [{
           object: this.container,
-          event: clappr.Events.CONTAINER_CLICK,
+          event: core.Events.CONTAINER_CLICK,
           callback: this.hide
         }];
-
-        if (this.container) {
-          containerEventListenerData.forEach(function (item) {
-            return _this3.stopListening(item.object, item.event, item.callback);
-          });
-          containerEventListenerData.forEach(function (item) {
-            return _this3.listenTo(item.object, item.event, item.callback);
-          });
-        }
+        if (this.container) containerEventListenerData.forEach(function (item) {
+          return _this3.listenTo(item.object, item.event, item.callback);
+        });
       }
     }, {
       key: "registerPlayerResize",
@@ -204,8 +233,16 @@
     }, {
       key: "onContainerChanged",
       value: function onContainerChanged() {
+        this.container && this.stopListening(this.container);
         this.container = this.core.activeContainer;
         this.bindContainerEvents();
+      }
+    }, {
+      key: "destroy",
+      value: function destroy() {
+        this.isRendered = false;
+
+        _get(_getPrototypeOf(SkeletonPlugin.prototype), "destroy", this).call(this);
       }
     }, {
       key: "onClick",
@@ -223,19 +260,27 @@
         this.$el.hide();
       }
     }, {
+      key: "cacheElements",
+      value: function cacheElements() {
+        this.$container = this.$el.find('.skeleton-container');
+      }
+    }, {
       key: "render",
       value: function render() {
+        if (this.isRendered) return;
         this.$el.html(this.template({
           options: this.options
         }));
-        this.$el.append(clappr.Styler.getStyleFor(css));
+        this.$el.append(core.Styler.getStyleFor(css_248z));
         this.core.$el[0].append(this.$el[0]);
+        this.cacheElements();
+        this.isRendered = true;
         return this;
       }
     }]);
 
     return SkeletonPlugin;
-  }(clappr.UICorePlugin);
+  }(core.UICorePlugin);
 
   return SkeletonPlugin;
 

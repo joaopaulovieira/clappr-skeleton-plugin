@@ -8,11 +8,12 @@ import serve from 'rollup-plugin-serve'
 import filesize from 'rollup-plugin-filesize'
 import size from 'rollup-plugin-sizes'
 import visualize from 'rollup-plugin-visualizer'
-import { terser } from "rollup-plugin-terser"
+import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
 const dev = !!process.env.DEV
 const analyzeBundle = !!process.env.ANALYZE_BUNDLE
+const minimize = !!process.env.MINIMIZE
 
 const plugins = [
   babel({ exclude: 'node_modules/**' }),
@@ -24,58 +25,59 @@ const plugins = [
 
 dev && plugins.push(
   serve({ contentBase: ['dist', 'public'], host: '0.0.0.0', port: '8080' }),
-  livereload({ watch: ['dist', 'public'] })
-  )
-
-analyzeBundle && plugins.push(
-  visualize({ open: true })
+  livereload({ watch: ['dist', 'public'] }),
 )
+
+analyzeBundle && plugins.push(visualize({ open: true }))
 
 const rollupConfig = [
   {
     input: 'src/skeleton.js',
-    external: ['clappr'],
+    external: ['@clappr/core'],
     output: {
       name: 'SkeletonPlugin',
       file: pkg.main,
       format: 'umd',
-      globals: { 'clappr': 'Clappr' }
+      globals: { '@clappr/core': 'Clappr' },
     },
     plugins: [
       resolve(),
       commonjs(),
-      ...plugins
-    ]
+      ...plugins,
+    ],
   },
   {
     input: 'src/skeleton.js',
-    external: ['clappr'],
+    external: ['@clappr/core'],
+    output: [
+      {
+        name: 'SkeletonPlugin',
+        file: pkg.module,
+        format: 'esm',
+        globals: { '@clappr/core': 'Clappr' },
+      },
+    ],
+    plugins,
+  },
+]
+
+minimize && rollupConfig.push(
+  {
+    input: 'src/skeleton.js',
+    external: ['@clappr/core'],
     output: [
       {
         name: 'SkeletonPlugin',
         file: 'dist/clappr-skeleton-plugin.min.js',
         format: 'umd',
-        globals: { 'clappr': 'Clappr' }
-      }
+        globals: { '@clappr/core': 'Clappr' },
+      },
     ],
     plugins: [
+      ...plugins,
       terser({ include: [/^.+\.min\.js$/] }),
-      ...plugins
     ],
   },
-  {
-    input: 'src/skeleton.js',
-	  external: ['clappr'],
-	  output: [
-      {
-        name: 'SkeletonPlugin',
-        file: pkg.module,
-        format: 'esm',
-        globals: { 'clappr': 'Clappr' }
-      }
-	  ],
-	  plugins
-  }
-]
+)
 
 export default rollupConfig

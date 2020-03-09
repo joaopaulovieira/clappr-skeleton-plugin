@@ -1,10 +1,12 @@
-import { UICorePlugin, Events, Styler, template } from 'clappr'
+import { UICorePlugin, Events, Styler, template, version } from '@clappr/core'
 
 import pluginStyle from './public/skeleton.scss'
 import templateHtml from './public/skeleton.html'
 
 export default class SkeletonPlugin extends UICorePlugin {
   get name() { return 'skeleton' }
+
+  get supportedVersion() { return { min: version } }
 
   get attributes() { return { class: 'skeleton' } }
 
@@ -37,10 +39,8 @@ export default class SkeletonPlugin extends UICorePlugin {
   bindContainerEvents() {
     const containerEventListenerData = [{ object: this.container, event: Events.CONTAINER_CLICK, callback: this.hide }]
 
-    if (this.container) {
-      containerEventListenerData.forEach(item => this.stopListening(item.object, item.event, item.callback))
+    if (this.container)
       containerEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
-    }
   }
 
   registerPlayerResize(size) {
@@ -49,8 +49,14 @@ export default class SkeletonPlugin extends UICorePlugin {
   }
 
   onContainerChanged() {
+    this.container && this.stopListening(this.container)
     this.container = this.core.activeContainer
     this.bindContainerEvents()
+  }
+
+  destroy() {
+    this.isRendered = false
+    super.destroy()
   }
 
   onClick() {
@@ -65,10 +71,17 @@ export default class SkeletonPlugin extends UICorePlugin {
     this.$el.hide()
   }
 
+  cacheElements() {
+    this.$container = this.$el.find('.skeleton-container')
+  }
+
   render() {
+    if (this.isRendered) return
     this.$el.html(this.template({ options: this.options }))
     this.$el.append(Styler.getStyleFor(pluginStyle))
     this.core.$el[0].append(this.$el[0])
+    this.cacheElements()
+    this.isRendered = true
     return this
   }
 }
