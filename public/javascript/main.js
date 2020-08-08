@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var urlParams;
 (function() {
   window.onpopstate = function () {

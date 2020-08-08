@@ -38,19 +38,15 @@ const configurations = {
           'css-loader',
           {
             loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                includePaths: [path.resolve(__dirname, './src/public')],
-              }
-            }
-          }
+            options: { sassOptions: { includePaths: [path.resolve(__dirname, './src/public')] } },
+          },
         ],
         include: path.resolve(__dirname, 'src'),
       },
       {
         test: /\.html/,
         loader: 'html-loader?minimize=false',
-      }
+      },
     ],
   },
   output: {
@@ -62,7 +58,7 @@ const configurations = {
   devServer: {
     contentBase: 'public/',
     host: '0.0.0.0',
-  }
+  },
 }
 
 if (minimize) {
