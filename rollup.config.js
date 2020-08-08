@@ -1,4 +1,4 @@
-import babel from '@rollup/plugin-babel'
+import { createBabelInputPluginFactory } from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import html from 'rollup-plugin-html'
@@ -15,8 +15,11 @@ const dev = !!process.env.DEV
 const analyzeBundle = !!process.env.ANALYZE_BUNDLE
 const minimize = !!process.env.MINIMIZE
 
+const babelPluginForUMDBundle = createBabelInputPluginFactory()
+const babelPluginForESMBundle = createBabelInputPluginFactory()
+const babelPluginOptions = { presets: [['@babel/preset-env', { modules: false }]], exclude: 'node_modules/**', babelHelpers: 'bundled' }
+
 const plugins = [
-  babel({ exclude: 'node_modules/**', babelHelpers: 'bundled' }),
   html(),
   postcss(),
   size(),
@@ -44,19 +47,26 @@ const mainBundle = {
       plugins: terser(),
     },
   ],
-  plugins: [resolve(), commonjs(), ...plugins],
+  plugins: [babelPluginForUMDBundle(babelPluginOptions), resolve(), commonjs(), ...plugins],
 }
 
 const esmBundle = {
   input: 'src/skeleton.js',
-  external: ['@clappr/core'],
+  external: ['@clappr/core', /@babel\/runtime/],
   output: {
     name: 'SkeletonPlugin',
     file: pkg.module,
     format: 'esm',
     globals: { '@clappr/core': 'Clappr' },
   },
-  plugins,
+  plugins: [
+    babelPluginForESMBundle({
+      ...babelPluginOptions,
+      plugins: ['@babel/plugin-transform-runtime'],
+      babelHelpers: 'runtime',
+    }),
+    ...plugins,
+  ],
 }
 
 export default [mainBundle, esmBundle]
