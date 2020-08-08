@@ -37,7 +37,10 @@ export default class SkeletonPlugin extends UICorePlugin {
   }
 
   bindContainerEvents() {
-    const containerEventListenerData = [{ object: this.container, event: Events.CONTAINER_CLICK, callback: this.hide }]
+    const containerEventListenerData = [
+      { object: this.container, event: Events.CONTAINER_PAUSE, callback: this.hide },
+      { object: this.container, event: Events.CONTAINER_PLAY, callback: this.show },
+    ]
     this.container && containerEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
   }
 
@@ -62,11 +65,11 @@ export default class SkeletonPlugin extends UICorePlugin {
   }
 
   show() {
-    this.$el.removeClass('skeleton-container--disabled')
+    this.$container.removeClass('skeleton-container--disabled')
   }
 
   hide() {
-    this.$el.addClass('skeleton-container--disabled')
+    this.$container.addClass('skeleton-container--disabled')
   }
 
   cacheElements() {

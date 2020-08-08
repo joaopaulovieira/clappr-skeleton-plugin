@@ -101,12 +101,12 @@ describe('Skeleton Plugin', () => {
     const plugin = new SkeletonPlugin(core)
     core.addPlugin(plugin)
 
-    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeFalsy()
+    expect(plugin.$container.hasClass('skeleton-container--disabled')).toBeFalsy()
     plugin.hide()
 
-    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeTruthy()
+    expect(plugin.$container.hasClass('skeleton-container--disabled')).toBeTruthy()
     plugin.show()
 
-    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeFalsy()
+    expect(plugin.$container.hasClass('skeleton-container--disabled')).toBeFalsy()
   })
 })
