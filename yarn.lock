@@ -896,6 +896,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@clappr/core@^0.4.12":
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/@clappr/core/-/core-0.4.12.tgz#ded88a7b95411b8e9dee913ed050f1d6bac717d8"
+  integrity sha512-U1XtUvPd+Y3WadCEp7B9kfcCbtIimG29Ui9t6ZYXF2mDNqxhol0ZqHuPXQauA0EGzA/zxHgpLfF9rm34/tCRLg==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"

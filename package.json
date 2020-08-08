@@ -44,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
+    "@clappr/core": "^0.4.12",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
@@ -76,26 +77,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "jest": {
-    "verbose": true,
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.html$": "<rootDir>/src/__mocks__/htmlMock.js"
-    },
-    "moduleNameMapper": {
-      "\\.(scss)$": "<rootDir>/src/__mocks__/styleMock.js"
-    },
-    "collectCoverageFrom": [
-      "src/*.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    }
   }
 }
