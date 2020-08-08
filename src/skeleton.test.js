@@ -75,6 +75,15 @@ describe('Skeleton Plugin', () => {
     expect(plugin.destroy).toHaveBeenCalled()
   })
 
+  it('resets isRendered flag if is destroyed', () => {
+    const core = new Core({})
+    const plugin = new SkeletonPlugin(core)
+    core.addPlugin(plugin)
+    plugin.destroy()
+
+    expect(plugin.isRendered).toBeFalsy()
+  })
+
   it('trigger onClick at click on plugin element', () => {
     const core = new Core({})
     const plugin = new SkeletonPlugin(core)
@@ -85,5 +94,19 @@ describe('Skeleton Plugin', () => {
     plugin.el.dispatchEvent(evt)
 
     expect(plugin.onClick).not.toHaveBeenCalled()
+  })
+
+  it('have methods to control your visibility', () => {
+    const core = new Core({})
+    const plugin = new SkeletonPlugin(core)
+    core.addPlugin(plugin)
+
+    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeFalsy()
+    plugin.hide()
+
+    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeTruthy()
+    plugin.show()
+
+    expect(plugin.$el.hasClass('skeleton-container--disabled')).toBeFalsy()
   })
 })

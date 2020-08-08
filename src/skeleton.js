@@ -38,9 +38,7 @@ export default class SkeletonPlugin extends UICorePlugin {
 
   bindContainerEvents() {
     const containerEventListenerData = [{ object: this.container, event: Events.CONTAINER_CLICK, callback: this.hide }]
-
-    if (this.container)
-      containerEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
+    this.container && containerEventListenerData.forEach(item => this.listenTo(item.object, item.event, item.callback))
   }
 
   registerPlayerResize(size) {
@@ -64,11 +62,11 @@ export default class SkeletonPlugin extends UICorePlugin {
   }
 
   show() {
-    this.$el.show()
+    this.$el.removeClass('skeleton-container--disabled')
   }
 
   hide() {
-    this.$el.hide()
+    this.$el.addClass('skeleton-container--disabled')
   }
 
   cacheElements() {

@@ -6,4 +6,8 @@
   background-color: black;
   color: white;
   line-height: 1.15 !important;
+
+  &--disabled {
+    display: none;
+  }
 }
