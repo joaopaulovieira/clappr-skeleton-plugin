@@ -55,7 +55,6 @@ const configurations = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: 'latest/',
     filename: 'clappr-skeleton-plugin.js',
     library: 'SkeletonPlugin',
     libraryTarget: 'umd',
