@@ -5,7 +5,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const minimize = !!process.env.MINIMIZE
 const analyzeBundle = !!process.env.ANALYZE_BUNDLE
 
-let configurations = {
+const configurations = {
   mode: 'development',
   externals: {
     clappr: {

@@ -1,8 +1,7 @@
 import { Core, Container, Playback, version } from '@clappr/core'
 import SkeletonPlugin from './skeleton'
 
-describe('Skeleton Plugin', function() {
-
+describe('Skeleton Plugin', () => {
   it('is loaded on core plugins array', () => {
     const core = new Core({})
     const plugin = new SkeletonPlugin(core)
@@ -36,7 +35,7 @@ describe('Skeleton Plugin', function() {
     expect(plugin.stopListening).toHaveBeenCalled()
   })
 
-  it('creates cache elements to not have unnecessary re-render cicles', () => {
+  it('creates cache elements to not have unnecessary re-render cycles', () => {
     const core = new Core({})
     const plugin = new SkeletonPlugin(core)
     core.addPlugin(plugin)
@@ -76,7 +75,7 @@ describe('Skeleton Plugin', function() {
     expect(plugin.destroy).toHaveBeenCalled()
   })
 
-  it('trigger onClick at click on plugim element', () => {
+  it('trigger onClick at click on plugin element', () => {
     const core = new Core({})
     const plugin = new SkeletonPlugin(core)
     core.addPlugin(plugin)
