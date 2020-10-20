@@ -1,8 +1,7 @@
 module.exports = {
-  'env': { jasmine: true },
-  'plugins': ['jasmine'],
-  'globals': { jasmine: true, window: true , document: true, Event: true, console: true, Clappr: true, $: true, require: true, process: true, __dirname: true, module: true },
-  'extends': ['eslint:recommended', 'plugin:jasmine/recommended'],
+  'env': { 'browser': true, 'node': true, 'jest': true },
+  'globals': { Clappr: true, $: true },
+  'extends': ['eslint:recommended'],
   'parserOptions': { 'sourceType': 'module', 'ecmaVersion': 2018, },
   'rules': {
     // Possible Errors
@@ -148,8 +147,5 @@ module.exports = {
     'symbol-description': ['error'],
     'template-curly-spacing': ['error', 'never'],
     'yield-star-spacing': ['error', { before: false, after: true }],
-    // Test Rules
-    'jasmine/prefer-toHaveBeenCalledWith': 0,
-    'jasmine/no-spec-dupes': 0,
   }
 }
