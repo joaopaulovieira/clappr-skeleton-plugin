@@ -1,7 +1,7 @@
-import { UICorePlugin, Events, Styler, template, version } from '@clappr/core'
+import './public/skeleton.scss'
+// import templateHtml from './public/skeleton.html'
 
-import pluginStyle from './public/skeleton.scss'
-import templateHtml from './public/skeleton.html'
+import { UICorePlugin, Events, template, version } from '@clappr/core'
 
 export default class SkeletonPlugin extends UICorePlugin {
   get name() { return 'skeleton' }
@@ -10,7 +10,7 @@ export default class SkeletonPlugin extends UICorePlugin {
 
   get attributes() { return { class: 'skeleton' } }
 
-  get template() { return template(templateHtml) }
+  get template() { return template('<p class="skeleton-container"> Skeleton Plugin</p>') }
 
   get events() {
     const events = { click: 'onClick' }
@@ -79,7 +79,6 @@ export default class SkeletonPlugin extends UICorePlugin {
   render() {
     if (this.isRendered) return
     this.$el.html(this.template({ options: this.options }))
-    this.$el.append(Styler.getStyleFor(pluginStyle))
     this.core.$el[0].append(this.$el[0])
     this.cacheElements()
     this.isRendered = true

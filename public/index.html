@@ -14,28 +14,9 @@
           <div id="player-wrapper" class="player"></div>
         </div>
       </div>
-      <div class="sidebar">
-        <div id="editor">var playerElement = document.getElementById("player-wrapper");
-
-var player = new Clappr.Player({
-  source: 'http://clappr.io/highline.mp4',
-  poster: 'http://clappr.io/poster.png',
-  playback: { controls: true },
-  plugins: [SkeletonPlugin],
-  SkeletonOptions: {}
-});
-
-player.attachTo(playerElement);
-        </div>
-        <button class="run btn btn-primary">Run</button>
-        <div id="console"> </div>
-      </div>
     </section>
     <footer class="footer"></footer>
-    <script type="text/javascript" charset="utf-8" src="javascript/main.js" async></script>
-    <script type="text/javascript" charset="utf-8" src="javascript/editor/ace.js" async></script>
-    <script type="text/javascript" charset="utf-8" src="clappr-skeleton-plugin.js"></script>
-    <!-- <script type="module" src="clappr-skeleton-plugin.esm.js"></script> -->
-    <script type="text/javascript" charset="utf-8" src="javascript/clappr-config.js" async></script>
+    <script type="module" src="/src/skeleton.js"></script>
+    <script type="module" src="javascript/clappr-config.js"></script>
   </body>
 </html>

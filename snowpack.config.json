@@ -1,0 +1,7 @@
+{
+  "mount": {
+    "public": { "url": "/" },
+    "src": { "url": "/src" }
+  },
+  "plugins": ["@snowpack/plugin-sass", "@snowpack/plugin-babel"]
+}
