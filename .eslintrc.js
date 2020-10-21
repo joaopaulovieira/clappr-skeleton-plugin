@@ -1,7 +1,7 @@
 module.exports = {
-  'env': { jasmine: true },
+  'env': { browser: true, node: true, jasmine: true },
   'plugins': ['jasmine'],
-  'globals': { jasmine: true, window: true , document: true, Event: true, console: true, Clappr: true, $: true, require: true, process: true, __dirname: true, module: true },
+  'globals': { Clappr: true, $: true },
   'extends': ['eslint:recommended', 'plugin:jasmine/recommended'],
   'parserOptions': { 'sourceType': 'module', 'ecmaVersion': 2018, },
   'rules': {

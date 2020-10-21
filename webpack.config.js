@@ -7,14 +7,7 @@ const analyzeBundle = !!process.env.ANALYZE_BUNDLE
 
 const configurations = {
   mode: 'development',
-  externals: {
-    clappr: {
-      amd: 'clappr',
-      commonjs: 'clappr',
-      commonjs2: 'clappr',
-      root: 'Clappr',
-    },
-  },
+  externals: { '@clappr/core': 'Clappr' },
   entry: path.resolve(__dirname, 'src/skeleton.js'),
   resolve: { extensions: ['.js'] },
   plugins: [new webpack.DefinePlugin({ VERSION: JSON.stringify(require('./package.json').version) })],
