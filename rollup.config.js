@@ -3,7 +3,6 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import html from 'rollup-plugin-html'
 import postcss from 'rollup-plugin-postcss'
-import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 import filesize from 'rollup-plugin-filesize'
 import size from 'rollup-plugin-sizes'
@@ -11,10 +10,6 @@ import visualize from 'rollup-plugin-visualizer'
 import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 import babelConfig from './babel.config.json'
-
-const dev = !!process.env.DEV
-const analyzeBundle = !!process.env.ANALYZE_BUNDLE
-const minimize = !!process.env.MINIMIZE
 
 const babelPluginForUMDBundle = createBabelInputPluginFactory()
 const babelPluginForESMBundle = createBabelInputPluginFactory()
@@ -25,14 +20,13 @@ const plugins = [
   postcss(),
   size(),
   filesize(),
-  dev && serve({ contentBase: ['dist', 'public'], host: '0.0.0.0', port: '8080' }),
-  dev && livereload({ watch: ['dist', 'public'] }),
-  analyzeBundle && visualize({ open: true }),
+  !!process.env.DEV && serve({ contentBase: ['dist', 'public'], host: '0.0.0.0', port: '8080' }),
+  !!process.env.ANALYZE_BUNDLE && visualize({ open: true }),
 ]
 
 const mainBundle = {
   input: 'src/skeleton.js',
-  external: ['@clappr/core'],
+  external: ['@clappr/core', /@babel\/runtime/],
   output: [
     {
       name: 'SkeletonPlugin',
@@ -40,7 +34,7 @@ const mainBundle = {
       format: 'umd',
       globals: { '@clappr/core': 'Clappr' },
     },
-    minimize && {
+    !!process.env.MINIMIZE && {
       name: 'SkeletonPlugin',
       file: 'dist/clappr-skeleton-plugin.min.js',
       format: 'umd',
@@ -63,7 +57,15 @@ const esmBundle = {
   plugins: [
     babelPluginForESMBundle({
       ...babelPluginOptions,
-      plugins: ['@babel/plugin-transform-runtime'],
+      plugins: [
+        [
+          '@babel/plugin-transform-runtime', {
+            useESModules: true,
+            absoluteRuntime: true,
+            version: pkg.devDependencies['@babel/plugin-runtime'],
+          },
+        ],
+      ],
       babelHelpers: 'runtime',
     }),
     ...plugins,
