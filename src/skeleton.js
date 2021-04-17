@@ -12,10 +12,7 @@ export default class SkeletonPlugin extends UICorePlugin {
 
   get template() { return template(templateHtml) }
 
-  get events() {
-    const events = { click: 'onClick' }
-    return events
-  }
+  get events() { return { click: 'onClick' } }
 
   constructor(core) {
     super(core)

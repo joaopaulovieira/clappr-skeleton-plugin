@@ -1,5 +1,5 @@
 {
-  "name": "clappr-skeleton-plugin",
+  "name": "@joaopaulo.vieira/clappr-skeleton-plugin",
   "version": "0.0.1",
   "description": "A skeleton plugin for Clappr to speed up the creation of new plugins",
   "keywords": [
