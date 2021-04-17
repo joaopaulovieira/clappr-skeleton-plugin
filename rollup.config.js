@@ -26,7 +26,7 @@ const plugins = [
 
 const mainBundle = {
   input: 'src/skeleton.js',
-  external: ['@clappr/core', /@babel\/runtime/],
+  external: ['@clappr/core'],
   output: [
     {
       name: 'SkeletonPlugin',
