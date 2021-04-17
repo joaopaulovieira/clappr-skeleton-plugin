@@ -25,8 +25,12 @@ You can use it from JSDelivr:
 https://cdn.jsdelivr.net/npm/clappr-skeleton-plugin@latest/dist/clappr-skeleton-plugin.min.js
 ```
 or as an npm package:
-```
-yarn add clappr-skeleton-plugin
+```properties
+# Using yarn
+yarn add @joaopaulo.vieira/clappr-skeleton-plugin
+
+# Using npm
+npm i @joaopaulo.vieira/clappr-skeleton-plugin
 ```
 Then just add `SkeletonPlugin` into the list of plugins of your player instance
 ```javascript
@@ -52,11 +56,14 @@ Description of the option
 
 
 ## Development
+Install dependencies: `npm install`
 
-Install dependencies: `yarn`
+Run: `npm start`
 
-Run: `yarn start`
+Test: `npm test`
 
-Build: `yarn build`
+Lint: `npm run lint`
 
-Minified version: `yarn release` -->
+Build: `npm run build`
+
+Minified version: `npm run release` -->
