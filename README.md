@@ -8,7 +8,7 @@
 
 # Clappr skeleton plugin
 
->Image to illustrate the plugin here
+<!-- >Image to illustrate the plugin here
 
 ## Table of Contents
 - [Features](https://github.com/joaopaulovieira/clappr-skeleton-plugin#Features)
@@ -59,4 +59,4 @@ Run: `yarn start`
 
 Build: `yarn build`
 
-Minified version: `yarn release`
+Minified version: `yarn release` -->
